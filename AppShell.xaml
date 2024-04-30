@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="NoteApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:NoteApp"
+    Shell.FlyoutBehavior="Disabled"
+    Title="NoteApp">
+
+    <TabBar>
+        <ShellContent
+            Title="Notes"
+            ContentTemplate="{DataTemplate local:Views.AllNotesView}"
+            Route="AllNotesView" />
+
+        <ShellContent
+            Title="Add note"
+            ContentTemplate="{DataTemplate local:Views.AddNoteView}"
+            Route="AddNoteView"/>
+    </TabBar>
+</Shell>
