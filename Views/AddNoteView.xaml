@@ -4,9 +4,16 @@
              x:Class="NoteApp.Views.AddNoteView"
              Title="">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Label Text="Add note:" FontSize="Header" Margin="10,20,0,0"/>
+        
+        <HorizontalStackLayout>
+            <Entry Placeholder="Enter title" Text="" Margin="10,20,0,0" MaximumWidthRequest="270" 
+                  MinimumWidthRequest="270" HorizontalOptions="Start"/>
+
+            <Picker Margin="50,0,0,0" MinimumWidthRequest="200" MaximumHeightRequest="50"/>
+        </HorizontalStackLayout>
+        
+        <Editor Margin="10,20,0,0" MinimumWidthRequest="1000" MaximumWidthRequest="1000" 
+                MaximumHeightRequest="500" MinimumHeightRequest="500" Placeholder="Enter note" HorizontalOptions="Start"/>
     </VerticalStackLayout>
 </ContentPage>

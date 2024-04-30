@@ -8,7 +8,41 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-            
+
+            <SearchBar MaximumWidthRequest="300" MinimumWidthRequest="300" HorizontalOptions="Start" Margin="0,20,0,0" Placeholder="Search"/>
+            <ListView>
+                <ListView.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Title" Grid.Column="0" LineHeight="5"/>
+                        <Label Text="Note" Grid.Column="1"/>
+                        <Label Text="Category" Grid.Column="2"/>
+                        <Label Text="Date" Grid.Column="3"/>
+                    </Grid>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </VerticalStackLayout>
     </ScrollView>
 
