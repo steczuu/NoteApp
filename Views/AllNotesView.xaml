@@ -9,8 +9,9 @@
             Padding="30,0"
             Spacing="25">
 
-            <SearchBar MaximumWidthRequest="300" MinimumWidthRequest="300" HorizontalOptions="Start" Margin="0,20,0,0" Placeholder="Search"/>
-            <ListView>
+           <SearchBar MaximumWidthRequest="300" MinimumWidthRequest="300" HorizontalOptions="Start" Margin="0,20,0,0" Placeholder="Search by title"/>
+
+            <ListView ItemSelected="ListView_ItemSelected">
                 <ListView.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -29,9 +30,6 @@
                     <DataTemplate>
                         <ViewCell>
                             <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>

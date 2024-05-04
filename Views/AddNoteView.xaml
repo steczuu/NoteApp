@@ -7,13 +7,13 @@
         <Label Text="Add note:" FontSize="Header" Margin="10,20,0,0"/>
         
         <HorizontalStackLayout>
-            <Entry Placeholder="Enter title" Text="" Margin="10,20,0,0" MaximumWidthRequest="270" 
+            <Entry Placeholder="Enter title" Text="" Margin="10,20,0,10" MaximumWidthRequest="270" 
                   MinimumWidthRequest="270" HorizontalOptions="Start"/>
 
             <Picker Margin="50,0,0,0" MinimumWidthRequest="200" MaximumHeightRequest="50"/>
         </HorizontalStackLayout>
         
-        <Editor Margin="10,20,0,0" MinimumWidthRequest="1000" MaximumWidthRequest="1000" 
-                MaximumHeightRequest="500" MinimumHeightRequest="500" Placeholder="Enter note" HorizontalOptions="Start"/>
+        <Editor Margin="10,0,0,0" MinimumWidthRequest="600" MaximumWidthRequest="600" 
+                MaximumHeightRequest="500" MinimumHeightRequest="500" Placeholder="Enter note" HorizontalOptions="Start" MaxLength="250"/>
     </VerticalStackLayout>
 </ContentPage>

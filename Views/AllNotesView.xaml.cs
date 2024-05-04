@@ -8,6 +8,11 @@ namespace NoteApp.Views
         {
             InitializeComponent();
         }
+
+        private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            await DisplayAlert("Alert", "Object selected", "OK");
+        }
     }
 
 }

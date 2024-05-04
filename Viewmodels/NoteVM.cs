@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NoteApp.Viewmodels
 {
-    internal class NoteVM : INotifyPropertyChanged
+    public class NoteVM : INotifyPropertyChanged
     {
         string title;
         string note;
@@ -39,6 +39,11 @@ namespace NoteApp.Viewmodels
         {
             set { SetProperty(ref date, value); }
             get { return date; }
+        }
+
+        public override string ToString()
+        {
+            return Title + Note + Category + Date;
         }
 
         bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
