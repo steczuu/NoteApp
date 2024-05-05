@@ -7,6 +7,7 @@ namespace NoteApp.Views
     {
         private bool WasClicked = true;
 
+
         public AllNotesView()
         {
             InitializeComponent();
@@ -42,6 +43,11 @@ namespace NoteApp.Views
 
                 WasClicked = true;
             }
+        }
+
+        private void CategoryPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

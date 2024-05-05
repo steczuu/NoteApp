@@ -26,17 +26,9 @@
                 <Entry x:Name="TitleInput" Placeholder="Enter title" Text="{Binding Note_VM.Title}" Margin="10,20,0,10" MaximumWidthRequest="270" 
                        MinimumWidthRequest="270" HorizontalOptions="Start" Opacity="0"/>
 
-                <Picker x:Name="CategoryPicker" Margin="50,0,0,0" MinimumWidthRequest="200" MaximumHeightRequest="80" Opacity="0" Title="Select category">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Important</x:String>
-                            <x:String>Class note</x:String>
-                            <x:String>The Press note</x:String>
-                            <x:String>Dictonary Note</x:String>
-                            <x:String>Scribal Note</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
+                <Picker x:Name="CategoryPicker" Margin="50,0,0,0" MinimumWidthRequest="200" MaximumHeightRequest="80" Opacity="0" 
+                        Title="Select category" ItemDisplayBinding="{Binding Value}" ItemsSource="{Binding CategoriesList}" SelectedItem="{Binding SelectedCategory}"/>
+
             </HorizontalStackLayout>
 
             <Editor x:Name="NoteInput" Margin="10,0,0,0" MinimumWidthRequest="600" MaximumWidthRequest="600" 
@@ -58,10 +50,10 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Label Text="Title" Grid.Column="0" LineHeight="5"/>
-                        <Label Text="Note" Grid.Column="1"/>
-                        <Label Text="Category" Grid.Column="2"/>
-                        <Label Text="Date" Grid.Column="3"/>
+                        <Label Text="Title" Grid.Column="0" TextColor="#D600AA" FontSize="Medium" FontAttributes="Bold"/>
+                        <Label Text="Note" Grid.Column="1" TextColor="#D600AA" FontSize="Medium" FontAttributes="Bold"/>
+                        <Label Text="Category" Grid.Column="2" TextColor="#D600AA" FontSize="Medium" FontAttributes="Bold"/>
+                        <Label Text="Date" Grid.Column="3" TextColor="#D600AA" FontSize="Medium" FontAttributes="Bold"/>
                     </Grid>
                 </ListView.Header>
                 <ListView.ItemTemplate>
@@ -74,6 +66,10 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Title}" Grid.Column="0"/>
+                                <Label Text="{Binding Note}" Grid.Column="1"/>
+                                <Label Text="{Binding Category}" Grid.Column="2"/>
+                                <Label Text="{Binding Date}" Grid.Column="3"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

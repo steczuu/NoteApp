@@ -1,4 +1,5 @@
 ﻿using NoteApp.Models;
+using NoteApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +18,7 @@ namespace NoteApp.Viewmodels
         bool isEditing;
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly NoteModelContext noteModelContext = new NoteModelContext();
+        private Categories _selectedCategory;
 
         public bool IsEditing
         {
@@ -30,11 +32,24 @@ namespace NoteApp.Viewmodels
             get { return note_VM; }
         }
 
+        public Categories SelectedCategory
+        {
+            get
+            {
+                return _selectedCategory;
+            }
+            set
+            {
+                SetProperty(ref _selectedCategory, value);
+                Note_VM.Category = _selectedCategory.ToString();
+            }
+        }
+
         public ICommand AddCommand { private set; get; }
         public ICommand AddNewNoteForm {  private set; get; }   
 
-
         public IList<NoteVM> notes { get; set; } = new ObservableCollection<NoteVM>();
+        public List<Categories> CategoriesList { get; set; }
 
         bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
@@ -52,7 +67,7 @@ namespace NoteApp.Viewmodels
         }
 
         public NoteListVM()
-        { 
+        {           
             using (var noteModelContext = new NoteModelContext())
             {
                 var notesFromDB = noteModelContext.Notes;
@@ -68,6 +83,8 @@ namespace NoteApp.Viewmodels
                     });
                 }
             }
+
+            CategoriesList = PickerService.GetCategories().OrderBy(c => c.Value).ToList();
 
             AddNewNoteForm = new Command(
             execute: () =>
@@ -109,12 +126,14 @@ namespace NoteApp.Viewmodels
 
                 noteModelContext.Notes.Add(note);
                 noteModelContext.SaveChanges();
-
+                Console.WriteLine(note.Title + note.Category + note.NoteDate + note.NoteInput);  
 
             }, canExecute: () =>
             {
                 return Note_VM != null &&
-                       Note_VM.Title != null;
+                       Note_VM.Title != null &&
+                       Note_VM.Note != null &&
+                       Note_VM.Category != null;
             });
         }
     }
