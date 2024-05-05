@@ -6,16 +6,10 @@
     xmlns:local="clr-namespace:NoteApp"
     Shell.FlyoutBehavior="Disabled"
     Title="NoteApp">
-
-    <TabBar>
-        <ShellContent
+    
+    <ShellContent
             Title="Notes"
             ContentTemplate="{DataTemplate local:Views.AllNotesView}"
             Route="AllNotesView" />
 
-        <ShellContent
-            Title="Add note"
-            ContentTemplate="{DataTemplate local:Views.AddNoteView}"
-            Route="AddNoteView"/>
-    </TabBar>
 </Shell>

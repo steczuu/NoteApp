@@ -31,6 +31,8 @@ namespace NoteApp.Viewmodels
         }
 
         public ICommand AddCommand { private set; get; }
+        public ICommand AddNewNoteForm {  private set; get; }   
+
 
         public IList<NoteVM> notes { get; set; } = new ObservableCollection<NoteVM>();
 
@@ -46,11 +48,11 @@ namespace NoteApp.Viewmodels
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public NoteListVM()
-        {
+        { 
             using (var noteModelContext = new NoteModelContext())
             {
                 var notesFromDB = noteModelContext.Notes;
@@ -67,6 +69,18 @@ namespace NoteApp.Viewmodels
                 }
             }
 
+            AddNewNoteForm = new Command(
+            execute: () =>
+            {
+                Note_VM = new NoteVM();
+                Note_VM.PropertyChanged += OnNotePropertyChanged;
+                IsEditing = true;
+            },
+            canExecute: () =>
+            {
+                return !IsEditing;
+            });
+
             void OnNotePropertyChanged(object? sender, PropertyChangedEventArgs e)
             {
                 (AddCommand as Command).ChangeCanExecute();
@@ -78,9 +92,9 @@ namespace NoteApp.Viewmodels
             }
 
             AddCommand = new Command(execute: () =>
-            {
+            { 
                 notes.Add(Note_VM);
-                Note_VM.PropertyChanged -= OnNotePropertyChanged;
+                Note_VM.PropertyChanged += OnNotePropertyChanged;
                 IsEditing = false;
                 RefreshCanExecutes();
 
@@ -100,8 +114,7 @@ namespace NoteApp.Viewmodels
             }, canExecute: () =>
             {
                 return Note_VM != null &&
-                       Note_VM.Title != null &&
-                       Note_VM.Note != null;
+                       Note_VM.Title != null;
             });
         }
     }
