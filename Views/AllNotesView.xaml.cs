@@ -1,5 +1,6 @@
-﻿using Microsoft.Maui.Controls.Platform;
-using NoteApp.Viewmodels;
+﻿using NoteApp.Viewmodels;
+using System.Diagnostics;
+
 
 namespace NoteApp.Views
 {
@@ -7,16 +8,17 @@ namespace NoteApp.Views
     {
         private bool WasClicked = true;
 
-
+        NoteListVM listVM;
         public AllNotesView()
         {
             InitializeComponent();
-            BindingContext = new NoteListVM();
+            listVM = new NoteListVM();
+            BindingContext = listVM;
         }
 
         private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            await DisplayAlert("Alert", "Object selected", "OK");
+             await DisplayAlert("Alert", "Delete selected note?", "Yes","No");
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -45,9 +47,16 @@ namespace NoteApp.Views
             }
         }
 
-        private void CategoryPicker_SelectedIndexChanged(object sender, EventArgs e)
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if (string.IsNullOrEmpty(e.NewTextValue))
+            {
+                NotesList.ItemsSource = listVM.notes;
+            }
+            else
+            {
+                NotesList.ItemsSource = listVM.notes.Where(c => c.Title.ToLower().Contains(e.NewTextValue.ToLower()));
+            }
         }
     }
 

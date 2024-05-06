@@ -18,7 +18,7 @@ namespace NoteApp.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source = 12354Notes.db");
+            optionsBuilder.UseSqlite("Data Source = NotesDB.db");
             optionsBuilder.UseLazyLoadingProxies();
         }
     }

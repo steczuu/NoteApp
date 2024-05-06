@@ -41,12 +41,12 @@ namespace NoteApp.Viewmodels
             set
             {
                 SetProperty(ref _selectedCategory, value);
-                Note_VM.Category = _selectedCategory.ToString();
+                Note_VM.Category = _selectedCategory.Value;
             }
         }
 
         public ICommand AddCommand { private set; get; }
-        public ICommand AddNewNoteForm {  private set; get; }   
+        public ICommand AddNewNoteForm {  private set; get; }
 
         public IList<NoteVM> notes { get; set; } = new ObservableCollection<NoteVM>();
         public List<Categories> CategoriesList { get; set; }
@@ -67,23 +67,9 @@ namespace NoteApp.Viewmodels
         }
 
         public NoteListVM()
-        {           
-            using (var noteModelContext = new NoteModelContext())
-            {
-                var notesFromDB = noteModelContext.Notes;
-
-                foreach (var note in notesFromDB)
-                {
-                    notes.Add(new NoteVM
-                    {
-                        Title = note.Title,
-                        Category = note.Category,
-                        Date = note.NoteDate,
-                        Note = note.NoteInput
-                    });
-                }
-            }
-
+        {
+            LoadNotes();
+            
             CategoriesList = PickerService.GetCategories().OrderBy(c => c.Value).ToList();
 
             AddNewNoteForm = new Command(
@@ -126,15 +112,33 @@ namespace NoteApp.Viewmodels
 
                 noteModelContext.Notes.Add(note);
                 noteModelContext.SaveChanges();
-                Console.WriteLine(note.Title + note.Category + note.NoteDate + note.NoteInput);  
-
-            }, canExecute: () =>
+            },
+            canExecute: () =>
             {
                 return Note_VM != null &&
                        Note_VM.Title != null &&
                        Note_VM.Note != null &&
                        Note_VM.Category != null;
             });
+        }
+
+        private void LoadNotes()
+        {
+            using (var noteModelContext = new NoteModelContext())
+            {
+                var notesFromDB = noteModelContext.Notes;
+
+                foreach (var note in notesFromDB)
+                {
+                    notes.Add(new NoteVM
+                    {
+                        Title = note.Title,
+                        Category = note.Category,
+                        Date = note.NoteDate,
+                        Note = note.NoteInput
+                    });
+                }
+            }
         }
     }
 }
