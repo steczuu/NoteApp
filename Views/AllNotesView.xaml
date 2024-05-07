@@ -14,6 +14,8 @@
             Padding="30,0"
             Spacing="25">
 
+            
+            
             <HorizontalStackLayout>
                 <SearchBar MaximumWidthRequest="300" MinimumWidthRequest="300" HorizontalOptions="Start" Margin="0,20,0,0" Placeholder="Search by title"
                            TextChanged="SearchBar_TextChanged" IsTextPredictionEnabled="True"/>
@@ -37,7 +39,7 @@
                     HorizontalOptions="Start" MaxLength="250" Text="{Binding Note_VM.Note}" Opacity="0"/>
 
             <Button x:Name="NoteAddBtn" MaximumWidthRequest="100" MinimumWidthRequest="100" Text="Add note" HorizontalOptions="Start" 
-                    Margin="500,0,0,0" Command="{Binding AddCommand}" Opacity="0"/>
+                    Margin="500,0,0,0" Command="{Binding AddCommand}" Opacity="0" Clicked="NoteAddBtn_Clicked"/>
 
 
 

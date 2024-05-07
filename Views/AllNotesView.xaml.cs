@@ -7,6 +7,7 @@ namespace NoteApp.Views
     public partial class AllNotesView : ContentPage
     {
         private bool WasClicked = true;
+        public bool answer;
 
         NoteListVM listVM;
         public AllNotesView()
@@ -18,7 +19,20 @@ namespace NoteApp.Views
 
         private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-             await DisplayAlert("Alert", "Delete selected note?", "Yes","No");
+            if (e.SelectedItem == null)
+            {
+                return;
+            }
+
+            var selectedNote = e.SelectedItem as NoteVM;
+            answer = await DisplayAlert("Alert", "Delete selected note?", "Yes", "No");
+
+            if (answer)
+            {
+                listVM.DeleteNote(selectedNote);
+            }
+
+            NotesList.SelectedItem = null;
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -57,6 +71,13 @@ namespace NoteApp.Views
             {
                 NotesList.ItemsSource = listVM.notes.Where(c => c.Title.ToLower().Contains(e.NewTextValue.ToLower()));
             }
+        }
+
+        private void NoteAddBtn_Clicked(object sender, EventArgs e)
+        {
+            listVM.Note_VM = new NoteVM();
+            NoteInput.Text = string.Empty;
+            TitleInput.Text = string.Empty;
         }
     }
 

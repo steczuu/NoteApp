@@ -18,7 +18,7 @@ namespace NoteApp.Viewmodels
         bool isEditing;
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly NoteModelContext noteModelContext = new NoteModelContext();
-        private Categories _selectedCategory;
+        public Categories _selectedCategory;
 
         public bool IsEditing
         {
@@ -69,7 +69,7 @@ namespace NoteApp.Viewmodels
         public NoteListVM()
         {
             LoadNotes();
-            
+
             CategoriesList = PickerService.GetCategories().OrderBy(c => c.Value).ToList();
 
             AddNewNoteForm = new Command(
@@ -86,7 +86,7 @@ namespace NoteApp.Viewmodels
 
             void OnNotePropertyChanged(object? sender, PropertyChangedEventArgs e)
             {
-                (AddCommand as Command).ChangeCanExecute();
+                (AddCommand as Command).ChangeCanExecute();              
             }
 
             void RefreshCanExecutes()
@@ -97,7 +97,7 @@ namespace NoteApp.Viewmodels
             AddCommand = new Command(execute: () =>
             { 
                 notes.Add(Note_VM);
-                Note_VM.PropertyChanged += OnNotePropertyChanged;
+                Note_VM.PropertyChanged -= OnNotePropertyChanged;
                 IsEditing = false;
                 RefreshCanExecutes();
 
@@ -112,6 +112,7 @@ namespace NoteApp.Viewmodels
 
                 noteModelContext.Notes.Add(note);
                 noteModelContext.SaveChanges();
+                Note_VM = null;
             },
             canExecute: () =>
             {
@@ -138,6 +139,18 @@ namespace NoteApp.Viewmodels
                         Note = note.NoteInput
                     });
                 }
+            }
+        }
+
+        public void DeleteNote(NoteVM note)
+        {
+            notes.Remove(note);
+
+            var noteToRemove = noteModelContext.Notes.FirstOrDefault(n => n.Title == note.Title && n.Category == note.Category);
+            if (noteToRemove != null)
+            {
+                noteModelContext.Notes.Remove(noteToRemove);
+                noteModelContext.SaveChanges();
             }
         }
     }
